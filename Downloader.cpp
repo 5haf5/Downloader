@@ -12,7 +12,6 @@ Downloader::Downloader(QWidget* parent)
     ui->setupUi(this);
     process = new QProcess(this);
 
-    // Logování výstupu yt-dlp
     connect(process, &QProcess::readyReadStandardOutput, this, [this]() {
         ui->log->append(process->readAllStandardOutput());
         });
@@ -21,17 +20,6 @@ Downloader::Downloader(QWidget* parent)
         ui->log->append(process->readAllStandardError());
         });
 
-    // Tlačítka
-    connect(ui->downloadButton, &QPushButton::clicked,
-        this, &Downloader::on_downloadButton_clicked);
-
-    connect(ui->selectFolderButton, &QPushButton::clicked,
-        this, &Downloader::on_selectFolderButton_clicked);
-
-    connect(ui->btnUpdateYtDlp, &QPushButton::clicked,
-        this, &Downloader::on_btnUpdateYtDlp_clicked);
-
-    // Výběr kvality
     ui->qualityBox->addItem("Hudba (MP3)");
     ui->qualityBox->addItem("360p");
     ui->qualityBox->addItem("480p");
@@ -75,12 +63,10 @@ void Downloader::on_downloadButton_clicked()
         return;
     }
 
-    // Výběr kvality
     QString quality = ui->qualityBox->currentText();
     QString format;
     QStringList args;
 
-    // 🎵 AUDIO ONLY režim
     if (quality.contains("Hudba")) {
         args << "-f" << "bestaudio"
             << "--extract-audio"
@@ -88,7 +74,7 @@ void Downloader::on_downloadButton_clicked()
             << "--audio-quality" << "0";
     }
     else {
-        // 🎞️ VIDEO režim
+        
         if (quality == "360p")      format = "bestvideo[height<=360]+bestaudio/best";
         else if (quality == "480p") format = "bestvideo[height<=480]+bestaudio/best";
         else if (quality == "720p") format = "bestvideo[height<=720]+bestaudio/best";
@@ -122,7 +108,7 @@ void Downloader::on_btnUpdateYtDlp_clicked()
     ui->log->append("🔄 Kontroluji aktualizaci yt-dlp...");
 
     QStringList args;
-    args << "-U";  // Update command
+    args << "-U";  
 
     process->start(ytDlpPath, args);
 
