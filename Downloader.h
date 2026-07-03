@@ -32,4 +32,4 @@ private:
     QString ytDlpPath = "C:/Tools/yt-dlp/yt-dlp.exe";
 };
 
-#endif // DOWNLOADER_H
+#endif
