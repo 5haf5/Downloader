@@ -2,7 +2,7 @@
 #include "Downloader.h"
 #include "ui_Downloader.h"
 
-#include <QFileDi alog>
+#include <QFileDialog>
 #include <QDebug>
 
 Downloader::Downloader(QWidget* parent)
